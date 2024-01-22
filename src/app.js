@@ -1,7 +1,17 @@
 import  express  from "express";
-const app = express();
+import connectDB from "./config/dbConnect.js";
 
-//middleware
+const connection = await connectDB();
+
+connection.on("error", (err) => {
+    console.error("Deu ruim ",err);
+})
+
+connection.once("open", () =>{
+    console.log("Conexão estabelecida")
+})
+
+const app = express();
 app.use(express.json())
 
 const livros = [

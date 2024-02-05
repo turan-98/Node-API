@@ -1,5 +1,6 @@
 import  express  from "express";
 import connectDB from "./config/dbConnect.js";
+import livro from "../src/models/Livro.js"
 
 const connection = await connectDB();
 
@@ -12,27 +13,12 @@ connection.once("open", () =>{
 })
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
 
-const livros = [
-    {
-        id:1,
-        titulo: "Pipoca"
-    },
-    {
-        id:2,
-        titulo:"Pipoca doce"
-    }
-]
-
-function searchBook(id){
-    return livros.findIndex(livro => {
-        return livro.id === Number(id);
-    })
-}
-
-app.get('/', (req,res) => {
-    res.status(200).send("Rodando liso");
+app.get("/livros", async (req,res) => {
+    // .find() método de buscar, como não passamos parametro algum ele vai retornar tudo.
+    const arrLivros = await livro.find({});
+    res.status(200).json(arrLivros)
 });
 
 //buscando por parametro
@@ -40,10 +26,6 @@ app.get("/livros/:id", (req,res) =>{
     const index = searchBook(req.params.id);
     res.status(200).json(livros[index]);
 })
-
-app.get("/livros", (req,res) => {
-    res.status(200).json(livros)
-});
 
 app.post("/livros", (req,res) => {
     livros.push(req.body);

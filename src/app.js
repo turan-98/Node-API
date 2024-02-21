@@ -15,23 +15,17 @@ connection.once("open", () =>{
 const app = express();
 app.use(express.json());
 
-app.get("/livros", async (req,res) => {
-    // .find() método de buscar, como não passamos parametro algum ele vai retornar tudo.
-    const arrLivros = await livro.find({});
-    res.status(200).json(arrLivros)
-});
-
 //buscando por parametro
 app.get("/livros/:id", (req,res) =>{
     const index = searchBook(req.params.id);
     res.status(200).json(livros[index]);
 })
-
+/*
 app.post("/livros", (req,res) => {
     livros.push(req.body);
     res.status(201).send("Livro criada mlk")
 })
-
+*/
 // atualizando
 app.put("/livros/:id", (req,res) => {
     const index = searchBook(req.params.id);

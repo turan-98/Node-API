@@ -1,6 +1,8 @@
 import  express  from "express";
 import connectDB from "./config/dbConnect.js";
 import livro from "../src/models/Livro.js"
+import routes from "./routes/index.js";
+
 
 const connection = await connectDB();
 
